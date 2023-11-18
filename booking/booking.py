@@ -18,10 +18,22 @@ class BookingsServicer(bookings_pb2_grpc.BookingsServicer):
          self.db = json.load(jsf)["bookings"]
 
    def GetAllBookings(self, request, context):
+      """
+      récupère la liste des bookings
+      :param request: requete
+      :param context:
+      :return: liste des bookings
+      """
       for bookings in self.db:
          yield bookings_pb2.Booking(userid=bookings['userid'], dates=bookings['dates'])
 
    def GetBookingByUser(self, request, context):
+      """
+      récupère la liste des bookings d'un utilisateur
+      :param request: requete
+      :param context:
+      :return: liste des bookings
+      """
       print('GetBookingByUser')
       list_dates = []
       for booking in self.db:
@@ -31,10 +43,22 @@ class BookingsServicer(bookings_pb2_grpc.BookingsServicer):
             yield bookings_pb2.Booking(userid=booking['userid'], dates=list_dates)
 
    def get_by_date(self, stub, date):
+      """
+      récupère la liste des movies par leur date
+      :param stub: requete
+      :param date:
+      :return:
+      """
       movies_list = stub.GetMmoviesBydate(date)
       return movies_list
 
    def AddBookingByUser(self, request, context):
+      """
+      rajoute un booking à un user
+      :param request: requete
+      :param context:
+      :return:
+      """
       with grpc.insecure_channel('localhost:3202') as channel:
          stub = times_pb2_grpc.TimeStub(channel)
          response = self.get_by_date(stub, request.date_booking)

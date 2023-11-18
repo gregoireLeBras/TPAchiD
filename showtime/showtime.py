@@ -13,10 +13,22 @@ class TimeServicer(times_pb2_grpc.TimeServicer):
          self.db = json.load(jsf)["schedule"]
 
    def GetAllShowtimes(self, request, context):
+      """
+      recupère la liste des showtimes
+      :param request: requeete
+      :param context:
+      :return: liste de showtimes
+      """
       for time in self.db:
          yield times_pb2.ShowTime(date=time['date'], movies=time['movies'])
 
    def GetMmoviesBydate(self, request, context):
+      """
+      récupère les movie par la date
+      :param request: requete
+      :param context:
+      :return: liste de movies
+      """
       for time in self.db:
          if time['date'] == request.date:
             return times_pb2.ShowTime(date=time['date'], movies=time['movies'])

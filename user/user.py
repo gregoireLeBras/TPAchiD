@@ -22,16 +22,37 @@ with open('{}/databases/users.json'.format("."), "r") as jsf:
 def home():
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
+
 @app.route("/users", methods=['GET'])
 def get_json():
+   """
+   permet de recuperer les utilisateurs
+
+   :return: json de tous les utilisateurs
+   """
    return make_response(jsonify(users), 200)
 
+
 def get_bookings(stub, userid):
+   """
+   requette booking
+
+   :param stub: stub de booking
+   :param userid: id de l'utilisateur
+   :return: les bookings lié à l'utilisateur
+   """
    bookings = stub.GetBookingByUser(bookings_pb2.User(user=userid))
    return bookings
 
+
 @app.route("/user/bookings/<userid>", methods=['GET'])
 def get_booking_for_user(userid):
+   """
+   recupère les bookings d'un utilisateur
+
+   :param userid: id de l'utilisateur
+   :return: dictionnaire des bookings lié à l'utilisateur
+   """
    with grpc.insecure_channel('localhost:3201') as channel:
       return_dict = []
       if " " in userid:
@@ -46,6 +67,12 @@ def get_booking_for_user(userid):
 
 @app.route("/user/getMoviesInfo/<userid>", methods=['GET'])
 def getMoviesInfo(userid):
+   """
+   recupère les movies d'un utilisateur
+
+   :param userid: id de l'utilisateur
+   :return: les films lié à un utilisateur ou erreur
+   """
    bookings = requests.get('http://192.168.1.12:3201/bookings/' + userid)
    movieDetailsArr = []
    if bookings.status_code == 200:
