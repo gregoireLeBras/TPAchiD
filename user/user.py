@@ -29,8 +29,7 @@ def get_booking_for_user(useridorname):
    """
       requette booking
 
-      :param stub: stub de booking
-      :param userid: id de l'utilisateur
+      :param useridorname: id de l'utilisateur
       :return: les bookings lié à l'utilisateur
       """
    if " " in useridorname:
