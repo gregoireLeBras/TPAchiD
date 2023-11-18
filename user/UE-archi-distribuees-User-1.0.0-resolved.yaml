@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: User API
+  description: User API
+  version: 1.0.0
+servers:
+  - url: 'https://192.068.1.12:3203/'
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /:
+    get:
+      tags:
+        - developers
+      summary: home page of the service
+      description: |
+        Nothing to do
+      operationId: home
+      responses:
+        "200":
+          description: welcome message
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1 style='color:blue'>Welcome to the User service!</h1>
+  /users:
+    get:
+      tags:
+        - developers
+      summary : get the full JSON database
+      description : get the full JSON database
+      operationId: get_json
+      responses:
+        "200":
+          description : full JSON
+          content :
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllUsers"
+  /users/{userid}:
+    get:
+      tags:
+        - developers
+      summary: get the user by its id
+      description: By passing in the appropriate options, you can get info of a User
+      operationId: get_user_byid
+      parameters:
+        - name: userid
+          in: path
+          description: User ID
+          required : true
+          schema :
+            type : string
+      responses:
+        "200":
+          description: User informations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid user id
+  /user/bookings/{userid}:
+    get:
+      tags:
+        - developers
+      summary : get all the bookings for a user
+      description: By passing in the appropriate options, you can get bookings of a user
+      operationId: get_booking_for_user
+      parameters:
+        - name: userid
+          in: path
+          description: User ID.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bookings of the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsUser'
+        "400":
+          description: bad input parameter
+
+
+
+  /user/getMoviesInfo/{userid}:
+    get:
+      tags:
+      - developers
+      summary: get movies information for user reservation
+      parameters:
+      - name: userId
+        in: path
+        description: User ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: movies information getted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesInformations'
+        "400":
+          description: user id not found
+
+components:
+  schemas:
+    AllUsers:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    User:
+      required:
+        - id
+        - name
+        - last_active
+      type: object
+      properties:
+        id:
+          type: string
+          example: chris_rivers
+        name:
+          type: string
+          example: Chris Rivers
+        last_active:
+          type: integer
+          example: 1360031010
+    BookingsUser:
+      required:
+        - dates
+      type: object
+      properties:
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateItem'
+    DateItem:
+      required:
+        - date
+        - movies
+      type: object
+      properties:
+        date:
+          type: string
+        movies:
+          type: array
+          items:
+            type: string
+    MoviesInformations:
+      type: object
+      required:
+        - movies
+      properties:
+        movies:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Movie'
+    Movie:
+      type: object
+      required:
+        - title
+        - rating
+        - director
+        - id
+      properties:
+        title:
+          type: string
+          example: The Martian
+        rating:
+          type: integer
+          example: 7
+        director:
+          type: string
+          example: Paul McGuigan
+        id:
+          type: string
+          example: 39ab85e5-5e8e-4dc5-afea-65dc368bd7ab
