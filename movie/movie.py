@@ -37,6 +37,10 @@ def playground():
 
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
+    """
+    lance le serveur
+    :return: resultat de requette et status code
+    """
     data = request.get_json()
     success, result = graphql_sync(
         schema,
@@ -50,6 +54,10 @@ def graphql_server():
 # root message
 @app.route("/", methods=['GET'])
 def home():
+    """
+    route de base
+    :return: template
+    """
     return make_response("<h1 style='color:blue'>Welcome to the Movie service!</h1>",200)
 
 @app.route("/template", methods=['GET'])

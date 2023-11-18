@@ -17,10 +17,22 @@ def home():
 
 @app.route("/users", methods=['GET'])
 def get_json():
+   """
+      permet de recuperer les utilisateurs
+
+      :return: json de tous les utilisateurs
+      """
    return make_response(jsonify(users), 200)
 
 @app.route("/user/bookings/<useridorname>", methods=['GET'])
 def get_booking_for_user(useridorname):
+   """
+      requette booking
+
+      :param stub: stub de booking
+      :param userid: id de l'utilisateur
+      :return: les bookings lié à l'utilisateur
+      """
    if " " in useridorname:
       userid = useridorname.replace(" ", "_").lower()
    req = requests.get('http://192.168.1.12:3201/bookings/' + userid)
@@ -31,6 +43,12 @@ def get_booking_for_user(useridorname):
 
 @app.route("/user/getMoviesInfo/<userid>", methods=['GET'])
 def getMoviesInfo(userid):
+   """
+      recupère les bookings d'un utilisateur
+
+      :param userid: id de l'utilisateur
+      :return: dictionnaire des bookings lié à l'utilisateur
+      """
    bookings = requests.get('http://192.168.1.12:3201/bookings/' + userid)
    movieDetailsArr = []
    if bookings.status_code == 200:

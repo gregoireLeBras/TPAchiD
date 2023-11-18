@@ -15,11 +15,20 @@ def home():
 
 @app.route("/showtimes", methods=['GET'])
 def get_schedule():
+   """
+   récupère la liste des schedules
+   :return: json
+   """
    res = make_response(jsonify(schedule), 200)
    return res
 
 @app.route("/showmovies/<date>", methods=['GET'])
 def get_movies_bydate(date):
+   """
+   recupère des movies par la date
+   :param date: date
+   :return: json de schedule
+   """
    for sch in schedule:
       if str(sch["date"]) == str(date):
         return make_response(jsonify(sch), 200)
