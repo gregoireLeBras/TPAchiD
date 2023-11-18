@@ -14,6 +14,10 @@ with open('{}/databases/movies.json'.format("."), "r") as jsf:
 # root message
 @app.route("/", methods=['GET'])
 def home():
+    """
+    route de base
+    :return: template
+    """
     return make_response("<h1 style='color:blue'>Welcome to the Movie service!</h1>",200)
 
 @app.route("/template", methods=['GET'])
@@ -27,6 +31,11 @@ def get_json():
 
 @app.route("/movies/<movieid>", methods=['GET'])
 def get_movie_byid(movieid):
+    """
+    récupère un movie par son id
+    :param movieid:
+    :return: json de movie
+    """
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             res = make_response(jsonify(movie),200)
@@ -35,6 +44,10 @@ def get_movie_byid(movieid):
 
 @app.route("/moviesbytitle", methods=['GET'])
 def get_movie_bytitle():
+    """
+    récupère un movie par son titre
+    :return: json de movie
+    """
     json = ""
     if request.args:
         req = request.args
@@ -50,6 +63,11 @@ def get_movie_bytitle():
 
 @app.route("/movies/<movieid>", methods=['POST'])
 def create_movie(movieid):
+    """
+    créer un movie
+    :param movieid:
+    :return: mmovie ajouter
+    """
     req = request.get_json()
 
     for movie in movies:
@@ -62,6 +80,11 @@ def create_movie(movieid):
 
 @app.route("/movies/<movieid>", methods=['DELETE'])
 def del_movie(movieid):
+    """
+    supprime un movie
+    :param movieid:
+    :return: json
+    """
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             movies.remove(movie)
@@ -72,6 +95,12 @@ def del_movie(movieid):
 
 @app.route("/movies/<movieid>/<title>", methods=['PUT'])
 def update_movie_title(movieid, title):
+    """
+    met à jour movie
+    :param movieid:
+    :param title:
+    :return:json
+    """
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             movie["title"] = str(title)

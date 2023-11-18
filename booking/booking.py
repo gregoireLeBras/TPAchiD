@@ -22,6 +22,11 @@ def get_json():
 
 @app.route("/bookings/<userid>", methods=['GET'])
 def get_booking_for_user(userid):
+   """
+   récupère les bookings d'un user
+   :param userid:
+   :return: json de bookings
+   """
    for booking in bookings:
       if str(booking["userid"]) == str(userid):
          return make_response(jsonify(booking), 200)
@@ -29,6 +34,11 @@ def get_booking_for_user(userid):
 
 @app.route("/bookings/<userid>", methods=['POST'])
 def add_booking_byuser(userid):
+   """
+   ajoute un booking à un utilisateur
+   :param userid:
+   :return: json du booking ajouter
+   """
    req = request.get_json()
    r = requests.get('http://192.168.1.12:3202/showmovies/' + req["date"])
    if r.status_code == 200:
