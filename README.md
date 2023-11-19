@@ -17,24 +17,24 @@ Version GraphQL des différentes API
 ## User 
 
 Service renvoyant des informations sur les utilisateurs  
-Version du service en Rest  
-Dépendances avec Movie, Booking et Showtime
+Version du service en Rest   
+Dépendances avec Movie, Booking et Showtime  
 
 ## Movie
 
-Service renvoyant des informations sur les films  
-Versions du service en Rest et en GraphQL
+Service renvoyant des informations sur les films   
+Versions du service en Rest et en GraphQL  
 
 ## Booking
 
-Service renvoyant des informations sur les bookings  
-Versions du service en Rest et en GRPC
-Dépendance avec Showtime
+Service renvoyant des informations sur les bookings   
+Versions du service en Rest et en GRPC  
+Dépendance avec Showtime  
 
 ## Showtimes
 
 Service renvoyant des informations sur les programmations de films  
-Versions du service en Rest et en GRPC
+Versions du service en Rest et en GRPC  
 
 # LANCER LES SERVICES
 
