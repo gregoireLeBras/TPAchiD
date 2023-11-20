@@ -54,14 +54,13 @@ def get_booking_for_user(userid):
    :return: dictionnaire des bookings lié à l'utilisateur
    """
    with grpc.insecure_channel('localhost:3201') as channel:
-      return_dict = []
       if " " in userid:
          userid = userid.replace(" ", "_").lower()
       stub = bookings_pb2_grpc.BookingsStub(channel)
       responses = get_bookings(stub, userid)
-      print(responses.message)
-      if len(return_dict) != 0:
-         return make_response(jsonify(return_dict), 200)
+      message = MessageToJson(responses)
+      if len(message) != 0:
+         return make_response(message, 200)
       return make_response(jsonify({"error":"Invalid user id"}), 400)
 
 
