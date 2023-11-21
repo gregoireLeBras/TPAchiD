@@ -12,8 +12,10 @@ from werkzeug.exceptions import NotFound
 
 
 class BookingsServicer(bookings_pb2_grpc.BookingsServicer):
+   """Servicer Booking"""
 
    def __init__(self):
+      """Initialise le servicer et lis le doncument Json"""
       with open('{}/databases/bookings.json'.format("."), "r") as jsf:
          self.db = json.load(jsf)["bookings"]
 

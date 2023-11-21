@@ -9,6 +9,7 @@ import times_pb2_grpc
 class TimeServicer(times_pb2_grpc.TimeServicer):
 
    def __init__(self):
+      """Initialise le servicer et lis le document Json"""
       with open('{}/databases/times.json'.format("."), "r") as jsf:
          self.db = json.load(jsf)["schedule"]
 

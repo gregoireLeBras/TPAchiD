@@ -20,6 +20,7 @@ with open('{}/databases/users.json'.format("."), "r") as jsf:
 
 @app.route("/", methods=['GET'])
 def home():
+   """Route par default"""
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
 
