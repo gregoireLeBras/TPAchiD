@@ -37,6 +37,7 @@ def get_movie_byid(movieid):
     :return: json de movie
     """
     for movie in movies:
+        print(movie)
         if str(movie["id"]) == str(movieid):
             res = make_response(jsonify(movie),200)
             return res
