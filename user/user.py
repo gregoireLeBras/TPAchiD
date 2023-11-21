@@ -48,7 +48,7 @@ def getMoviesInfo(userid):
       :param userid: id de l'utilisateur
       :return: dictionnaire des bookings lié à l'utilisateur
       """
-   bookings = requests.get('http://192.168.1.12:3201/bookings/' + userid)
+   bookings = requests.get('http://172.20.28.151:3201/bookings/' + userid)
    movieDetailsArr = []
    if bookings.status_code == 200:
       for date in bookings.json()['dates']:
@@ -63,7 +63,7 @@ def getMoviesInfo(userid):
                }
             }
             '''
-            movieDetails = requests.post('http://192.168.1.12:3200/graphql', json={'query': query})
+            movieDetails = requests.post('http://172.20.28.151:3200/graphql', json={'query': query})
             movieDetailsArr.append(movieDetails.json()["data"]["get_movie_by_id"])
       return make_response(jsonify(movieDetailsArr), 200)
    return make_response(jsonify({"error":"Invalid user id"}), 400)
