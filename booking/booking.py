@@ -40,7 +40,7 @@ def add_booking_byuser(userid):
    :return: json du booking ajouter
    """
    req = request.get_json()
-   r = requests.get('http://192.168.1.12:3202/showmovies/' + req["date"])
+   r = requests.get('http://172.20.28.151:3202/showmovies/' + req["date"])
    if r.status_code == 200:
       if req["movieid"] in r.json()["movies"]:
          one_booking = {
