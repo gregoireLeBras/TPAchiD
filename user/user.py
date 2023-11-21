@@ -62,7 +62,6 @@ def get_booking_for_user(userid):
       stub = bookings_pb2_grpc.BookingsStub(channel)
       responses = get_bookings(stub, userid)
       bookings = [MessageToDict(booking) for booking in responses]
-      print(bookings)
       if len(bookings) != 0:
          return make_response(jsonify(bookings), 200)
       return make_response(jsonify({"error":"Invalid user id"}), 400)
