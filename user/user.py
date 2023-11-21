@@ -2,13 +2,15 @@ from flask import Flask, render_template, request, jsonify, make_response
 import requests
 import json
 import grpc
-from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToDict, MessageToJson
 from grpc._channel import _MultiThreadedRendezvous
 from werkzeug.exceptions import NotFound
 import bookings_pb2
 import bookings_pb2_grpc
 import times_pb2_grpc
 import times_pb2
+from google.protobuf.json_format import MessageToDict
+
 
 app = Flask(__name__)
 
@@ -59,9 +61,10 @@ def get_booking_for_user(userid):
          userid = userid.replace(" ", "_").lower()
       stub = bookings_pb2_grpc.BookingsStub(channel)
       responses = get_bookings(stub, userid)
-      message = MessageToJson(responses)
-      if len(message) != 0:
-         return make_response(message, 200)
+      bookings = [MessageToDict(booking) for booking in responses]
+      print(bookings)
+      if len(bookings) != 0:
+         return make_response(jsonify(bookings), 200)
       return make_response(jsonify({"error":"Invalid user id"}), 400)
 
 
